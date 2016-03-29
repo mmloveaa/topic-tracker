@@ -1,0 +1,54 @@
+<h1>Messaging</h1>
+<br />
+<br />
+
+  <ul>
+    <h3 id="sendTo">List of members</h3>
+    <li id="sendTo" ng-repeat='user in users'>{{user.username | json}}</li>
+  </ul>
+  <br />
+  <br />
+
+  <div id="sendTo">
+    Send to: {{message.to.username}}
+
+     <select name="recipient" id="recipient" required
+        ng-options='user.username for user in users'
+        ng-model="message.to">
+     </select>
+
+  </div>
+  <br />
+
+ 
+
+<!-- <div>
+  select: {{selected2}}
+</div> -->
+  
+  <hr />
+
+  <a href="#">Inbox <span class="badge">42</span></a>
+
+  <button class="btn btn-primary" type="button">
+    Messages <span class="badge">4</span>
+  </button>
+  <br />
+  <br />
+
+  <form name="messageForm" ng-submit='send()'>
+
+
+
+        <!-- <select name="recipient" id="recipient" required
+        ng-model="selected2">
+          <option ng-repeat='user in users' value="{{user._id}}">{{user.username}}</option>
+        </select> -->
+
+
+
+        <textarea name="body" id="" cols="30" rows="10" ng-model="message.body"></textarea>
+
+        <button>Send</button>
+
+  </form>

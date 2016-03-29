@@ -1,0 +1,23 @@
+<!-- Hello {{user}} -->
+
+<!-- <input type="url" placeholder="Your image"></input>
+<button ng-click="update()" ng-model="newUser.image" type="button">Submit</button> -->
+  <img ng-src={{image}}>
+
+  <form name='updateForm' ng-submit='update(newUser)'>
+
+    <div class="form-group">
+      <label for="image">New Image:</label>
+      <input type="text"
+             class='form-control'
+             ng-model='newUser.image'
+             name="image"
+             id="image"
+             required>
+    </div>
+
+    <button type="submit"
+            class="btn btn-default">update
+    </button>
+
+  </form>
