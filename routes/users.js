@@ -2,6 +2,61 @@ var express = require('express');
 var router = express.Router();
 
 var User = require('../models/user');
+var Twitter = require('twitter');
+
+require('dotenv').config();
+
+var client = new Twitter({
+  consumer_key: process.env.consumer_key,
+  consumer_secret:  process.env.consumer_secret,
+  access_token_key:   process.env.access_token_key,
+  access_token_secret:  process.env.access_token_secret
+});
+
+
+router.post('/search/tweets', User.authMiddleware ,function(req, res) {
+
+  var query = req.body.interests;
+  console.log("req.body: ", req.body.interests);
+
+  client.stream('statuses/filter', {track: req.body.interests},  function(stream){
+    stream.on('data', function(tweet) {
+      console.log(tweet.text);
+    });
+  // client.get('search/tweets', {q: query}, function(err, tweets, response){
+  //   // console.log("response: ", response)
+  //   res.status(err ? 400 : 200).send(err || response);
+  // });
+});
+
+});
+
+router.get('/interests',User.authMiddleware, function(req, res){
+  console.log('req.user: ',req.user)
+  User.findById(req.user._id, function(err, user) {
+    res.status(err ? 400 : 200).send(err || user.interests);
+  });
+})
+
+router.post('/interests',User.authMiddleware, function(req, res){
+    // console.log('req.user: ',req.user)
+    User.findById(req.user._id, function(err, user) {
+      user.interests.push(req.body.interests);
+      user.save(function(err,user){
+      res.status(err ? 400 : 200).send(err || user.interests);
+    });
+  });
+});
+
+router.delete('/interests',User.authMiddleware, function(req, res){
+    // console.log('req.user: ',req.user)
+    User.findById(req.user._id, function(err, user) {
+      user.interests.splice(user.interests.indexOf(req.body.interests),1);
+      user.save(function(err,user){
+      res.status(err ? 400 : 200).send(err || user.interests);
+    });
+  });
+});
 
 router.get('/', function(req, res) {
   User.find({}, function(err, users) {

@@ -12,7 +12,8 @@ var userSchema = new mongoose.Schema({
   username: { type: String, unique: true, required: true },
   password: { type: String, required: true },
   image: { type: String, default: "https://cdn0.vox-cdn.com/images/verge/default-avatar.v9899025.gif" },
-  messages: { type: Array }
+  messages: { type: Array },
+  interests: [String]
 });
 
 userSchema.statics.authMiddleware = function(req, res, next) {
