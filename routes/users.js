@@ -50,6 +50,7 @@ router.post('/interests',User.authMiddleware, function(req, res){
 
 router.delete('/interests',User.authMiddleware, function(req, res){
     // console.log('req.user: ',req.user)
+    // req.body what user type in front end, user.interests is the array
     User.findById(req.user._id, function(err, user) {
       user.interests.splice(user.interests.indexOf(req.body.interests),1);
       user.save(function(err,user){
