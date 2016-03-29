@@ -27,7 +27,7 @@ router.post('/search/tweets', User.authMiddleware ,function(req, res) {
   //   // console.log("response: ", response)
   //   res.status(err ? 400 : 200).send(err || response);
   // });
-});
+  });
 
 });
 
